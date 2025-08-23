@@ -2,6 +2,7 @@ package com.todolist.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todolist.service.TaskService;
-import com.todolist.model.Task;
+import com.todolist.dto.TaskDto;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -26,29 +27,29 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getTasks() {
+    public List<TaskDto> getTasks() {
         return service.getAllTasks();
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        return service.addTask(task);
+    public TaskDto addTask(@RequestBody TaskDto dto) {
+        return service.addTask(dto);
     }
-    
+
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        Task task = service.getTaskById(id)
-            .orElseThrow(() -> new RuntimeException("Task not found"));
-    
-        task.setTitle(updatedTask.getTitle());
-        task.setCompleted(updatedTask.isCompleted());
-    
-        return service.updateTask(task);
+    public TaskDto updateTask(@PathVariable Long id, @RequestBody TaskDto dto) {
+        return service.updateTask(id, dto);
     }
-    
 
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         service.deleteTask(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskDto> getTask(@PathVariable Long id) {
+        return service.getTaskById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
