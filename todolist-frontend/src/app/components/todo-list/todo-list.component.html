@@ -1,0 +1,32 @@
+<div>
+  <h2>Todo List</h2>
+  <input [(ngModel)]="newTask" placeholder="Nouvelle tâche" />
+  <button (click)="addTask()">Ajouter</button>
+
+  <ul>
+    @for (task of tasks; track task.id) {
+    <li>
+      <input type="checkbox" [(ngModel)]="task.completed" (change)="updateTask(task)" />
+      {{ task.title }}
+      <button (click)="openEditModal(task)">Update</button>
+      <button (click)="deleteTask(task.id)">Delete</button>
+    </li>
+    }
+  </ul>
+
+  <!-- Modal -->
+  @if (isEditModalOpen) {
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div class="bg-white p-6 rounded shadow-md w-1/3">
+        <h3 class="text-lg font-bold mb-4">Modifier la tâche</h3>
+  
+        <input [(ngModel)]="selectedTask.title" class="border p-2 w-full mb-4" placeholder="Titre de la tâche" />
+  
+        <div class="flex justify-end gap-2">
+          <button (click)="closeEditModal()" class="bg-gray-400 text-white px-3 py-1 rounded">Annuler</button>
+          <button (click)="saveEditedTask()" class="bg-green-500 text-white px-3 py-1 rounded">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
