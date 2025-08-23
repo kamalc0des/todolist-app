@@ -31,15 +31,37 @@ export class TodoListComponent implements OnInit {
   addTask() {
     if (this.newTask.trim()) {
       const task: Task = { title: this.newTask, completed: false };
-      this.taskService.addTask(task).subscribe(() => {
-        this.newTask = '';
-        this.loadTasks();
+      this.taskService.addTask(task).subscribe({
+        next: () => {
+          this.newTask = '';
+          this.loadTasks();
+        },
+        error: (err) => {
+          if (err.error && err.error.title) {
+            alert(err.error.title);
+          } else {
+            alert('Erreur during task creation');
+          }
+        }
       });
+    } else {
+      alert("The title must ne not empty");
     }
   }
 
   updateTask(task: Task) {
-    this.taskService.updateTask(task).subscribe();
+    this.taskService.updateTask(task).subscribe({
+      next: () => {
+        console.log('Task updated');
+      },
+      error: (err) => {
+        if (err.error && err.error.title) {
+          alert(err.error.title); // message envoyé par ton backend
+        } else {
+          alert("Error during the update");
+        }
+      }
+    });
   }
 
   deleteTask(id?: number) {

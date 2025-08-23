@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todolist.service.TaskService;
+
+import jakarta.validation.Valid;
+
 import com.todolist.dto.TaskDto;
 
 @RestController
@@ -32,12 +35,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDto addTask(@RequestBody TaskDto dto) {
+    public TaskDto addTask(@Valid @RequestBody TaskDto dto) {
         return service.addTask(dto);
     }
 
     @PutMapping("/{id}")
-    public TaskDto updateTask(@PathVariable Long id, @RequestBody TaskDto dto) {
+    public TaskDto updateTask(@PathVariable Long id, @Valid @RequestBody TaskDto dto) {
         return service.updateTask(id, dto);
     }
 
