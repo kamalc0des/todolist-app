@@ -36,7 +36,7 @@ A fullstack **Todo List application** built with:
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/todolist-app.git
+git clone https://github.com/kamalc0des/todolist-app.git
 cd todolist-app
 ```
 
@@ -44,7 +44,7 @@ cd todolist-app
 
 ### 2. Run the backend (Spring Boot)
 ```bash
-cd todolist-backend
+cd todolist
 ./mvnw spring-boot:run
 ```
 
@@ -76,7 +76,7 @@ ng build --configuration production
 ## 📂 Project Structure
 ```
 todolist-app/
- ├── todolist-backend/     # Spring Boot backend
+ ├── todolist/     # Spring Boot backend
  ├── todolist-frontend/    # Angular + Tailwind frontend
  └── README.md             # Documentation
 ```
