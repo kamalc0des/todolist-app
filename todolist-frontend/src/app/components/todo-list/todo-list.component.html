@@ -16,6 +16,12 @@
     </button>
   </div>
 
+  @if (errorMessage) {
+      <div class="text-red-500 text-sm mb-3">
+        {{ errorMessage }}
+      </div>
+  }
+
   <!-- Liste des tâches -->
   <ul class="space-y-2">
     @for (task of tasks; track task.id) {
@@ -51,7 +57,7 @@
     }
   </ul>
 
-  <!-- Modal -->
+  <!-- MODAL -->
   @if (isEditModalOpen) {
     <div
       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
@@ -66,6 +72,13 @@
           class="border border-gray-300 rounded px-3 py-2 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-green-400"
           placeholder="Titre de la tâche"
         />
+
+        <!-- ERROR MESSAGE -->
+        @if (isEditModalOpen) {
+          <div class="text-red-500 text-sm pb-3">
+            {{ errorMessageModal }}
+          </div>
+        }
 
         <div class="flex justify-end gap-2">
           <button

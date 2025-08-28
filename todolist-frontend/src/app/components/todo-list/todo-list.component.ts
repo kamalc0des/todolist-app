@@ -18,6 +18,9 @@ export class TodoListComponent implements OnInit {
   isEditModalOpen = false;
   selectedTask: Task = { title: '', completed: false };
 
+  errorMessage: string = '';
+  errorMessageModal: string = '';
+
   constructor(private taskService: TaskService) { }
 
   ngOnInit() {
@@ -35,31 +38,33 @@ export class TodoListComponent implements OnInit {
         next: () => {
           this.newTask = '';
           this.loadTasks();
+          this.errorMessage = "";
         },
         error: (err) => {
-          if (err.error && err.error.title) {
-            alert(err.error.title);
+          if (err.error && err.error.errors) {
+            const errors = err.error.errors;
+            // Get the first error found
+            const firstKey = Object.keys(errors)[0];
+            this.errorMessage = errors[firstKey];
           } else {
-            alert('Erreur during task creation');
+            this.errorMessage = "Error not defined";
           }
         }
       });
-    } else {
-      alert("The title must ne not empty");
+    } else { // default error (ex: the user do not enter valeu into the input)
+      this.errorMessage = "The title must ne not empty";
     }
   }
 
   updateTask(task: Task) {
     this.taskService.updateTask(task).subscribe({
       next: () => {
-        console.log('Task updated');
+        this.loadTasks();
+        this.errorMessage = "";
       },
       error: (err) => {
-        if (err.error && err.error.title) {
-          alert(err.error.title); // message envoyé par ton backend
-        } else {
-          alert("Error during the update");
-        }
+        console.error("❌ Error not declared during the update", err);
+        this.errorMessageModal = "❌ Error not declared during the update";
       }
     });
   }
@@ -72,7 +77,7 @@ export class TodoListComponent implements OnInit {
 
   // 🔑 modal logic
   openEditModal(task: Task) {
-    this.selectedTask = { ...task }; // clone pour éviter de modifier directement
+    this.selectedTask = { ...task }; // clone the task, do not update the current directly
     this.isEditModalOpen = true;
   }
 
@@ -81,9 +86,22 @@ export class TodoListComponent implements OnInit {
   }
 
   saveEditedTask() {
-    this.taskService.updateTask(this.selectedTask).subscribe(() => {
-      this.loadTasks();
-      this.closeEditModal();
+    this.taskService.updateTask(this.selectedTask).subscribe({
+      next: () => {
+        this.loadTasks();
+        this.closeEditModal();
+        this.errorMessageModal = '';
+      },
+      error: (err) => {
+          if (err.error && err.error.errors) {
+            const errors = err.error.errors;
+            // Get the first error
+            const firstKey = Object.keys(errors)[0];
+            this.errorMessageModal = errors[firstKey];
+          } else {
+            this.errorMessageModal = "Error not defined";
+          }
+      }
     });
   }
 }
