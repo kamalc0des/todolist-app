@@ -14,11 +14,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todolist.service.TaskService;
-
 import jakarta.validation.Valid;
-
 import com.todolist.dto.TaskDto;
 
+
+/**
+ * TaskController is the REST controller for Task resources.
+ * It defines the API endpoints and maps HTTP requests to service methods.
+ *
+ * Annotations:
+ * - @RestController: Marks the class as a REST controller (returns JSON by default).
+ * - @RequestMapping("/api/tasks"): Base path for all Task endpoints.
+ * - @CrossOrigin: Allows requests from the Angular frontend (CORS).
+ *
+ * Example routes:
+ * - GET /api/tasks -> get all tasks
+ * - GET /api/tasks/{id} -> get a single task
+ * - POST /api/tasks -> create a new task
+ * - PUT /api/tasks/{id} -> update an existing task
+ * - DELETE /api/tasks/{id} -> delete a task
+ */
 @RestController
 @RequestMapping("/api/tasks")
 @CrossOrigin(origins = "http://localhost:4200") // authorize Angular

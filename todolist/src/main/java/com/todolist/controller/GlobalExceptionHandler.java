@@ -9,10 +9,31 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * GlobalExceptionHandler centralizes exception handling across the whole application.
+ *
+ * Why use it?
+ * - Keeps controllers clean by removing error handling logic from them.
+ * - Ensures consistent error response format for the frontend (Angular).
+ * - Improves maintainability (all error handling in one place).
+ *
+ * Behavior:
+ * - Validation errors (@Valid) -> return {"errors": {"field": "message"}}
+ * - Runtime exceptions (business errors) -> return {"errors": {"global": "message"}}
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Validation errors (@Valid)
+    
+    /**
+     * Handle validation errors triggered by @Valid annotations.
+     * Example response:
+     * {
+     *   "errors": {
+     *     "title": "Title is mandatory"
+     *   }
+     * }
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> fieldErrors = new HashMap<>();
@@ -26,7 +47,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    // Business errors
+    /**
+     * Handle business logic exceptions thrown in the service layer.
+     * Example response:
+     * {
+     *   "errors": {
+     *     "global": "Task not found"
+     *   }
+     * }
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleRuntime(RuntimeException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
