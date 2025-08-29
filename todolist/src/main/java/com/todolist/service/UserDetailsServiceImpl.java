@@ -1,6 +1,5 @@
 package com.todolist.service;
 
-// import com.todolist.model.User;
 import com.todolist.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

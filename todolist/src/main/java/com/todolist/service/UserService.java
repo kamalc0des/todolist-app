@@ -20,11 +20,6 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    // 🟢 REGISTER
-    /**
-     * @param request
-     * @return
-     */
     public AuthResponse register(RegisterRequest request) {
         var user = User.builder()
                 .username(request.username())
@@ -37,11 +32,6 @@ public class UserService {
         return new AuthResponse(jwtToken);
     }
 
-    // 🟢 LOGIN
-    /**
-     * @param request
-     * @return
-     */
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

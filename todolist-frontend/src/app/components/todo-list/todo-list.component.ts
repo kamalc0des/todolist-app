@@ -65,8 +65,8 @@ export class TodoListComponent implements OnInit {
         this.errorMessage = "";
       },
       error: (err) => {
-        console.error("❌ Error not declared during the update", err);
-        this.errorMessageModal = "❌ Error not declared during the update";
+        console.error("Error not declared during the update", err);
+        this.errorMessageModal = "Error not declared during the update";
       }
     });
   }
@@ -77,7 +77,6 @@ export class TodoListComponent implements OnInit {
     }
   }
 
-  // 🔑 modal logic
   openEditModal(task: Task) {
     this.selectedTask = { ...task }; // clone the task, do not update the current directly
     this.isEditModalOpen = true;
