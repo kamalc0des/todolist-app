@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-todo-list',
@@ -21,10 +22,15 @@ export class TodoListComponent implements OnInit {
   errorMessage: string = '';
   errorMessageModal: string = '';
 
-  constructor(private taskService: TaskService) { }
+  constructor(private taskService: TaskService, private router: Router) { }
 
   ngOnInit() {
     this.loadTasks();
+  }
+
+  logout() {
+    localStorage.removeItem('token');   // remove JWT
+    this.router.navigate(['/login']);   // redirect to login page
   }
 
   loadTasks() {
