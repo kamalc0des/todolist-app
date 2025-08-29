@@ -1,5 +1,3 @@
-// Used by the frontend, we do not expose directly our datas from Task entity
-
 package com.todolist.dto;
 
 import jakarta.validation.constraints.NotBlank;

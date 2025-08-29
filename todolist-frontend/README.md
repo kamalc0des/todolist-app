@@ -1,59 +1,124 @@
-# TodolistFrontend
+# ✅ Todo List App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+A fullstack **Todo List application** with authentication, built using:
 
-## Development server
+- **Frontend:** Angular 20 (standalone components) + TailwindCSS  
+- **Backend:** Spring Boot 3 (Java, Maven, Spring Security, Spring Data JPA, JWT)  
 
-To start a local development server, run:
+---
 
+## 🚀 Features
+
+- 🔑 User authentication with JWT (Register & Login)  
+- 🛡️ Protected routes (AuthGuard on Angular, Spring Security on backend)  
+- ➕ Add, ✏️ update, ❌ delete tasks  
+- ✅ Mark tasks as completed (with strikethrough)  
+- 🪟 Edit tasks in a modal dialog  
+- 💾 Persistent backend storage (H2/PostgreSQL)  
+- 🎨 Modern responsive UI with TailwindCSS  
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- Angular 20 (Standalone Components + Angular Router)
+- TailwindCSS
+- TypeScript
+- AuthGuard + LocalStorage for JWT token
+
+### Backend
+- Spring Boot 3.x
+- Spring Data JPA
+- Spring Security + JWT (stateless authentication)
+- Lombok (for boilerplate reduction)
+- H2 Database (default, in-memory)  
+- PostgreSQL (optional for production)
+
+---
+
+## ⚙️ Installation & Usage
+
+### 1. Clone the repo
 ```bash
+git clone https://github.com/kamalc0des/todolist-app.git
+cd todolist-app
+```
+
+---
+
+### 2. Run the backend (Spring Boot)
+```bash
+cd todolist
+./mvnw spring-boot:run
+```
+
+API endpoints:
+- `POST /api/auth/register` → Register a new user  
+- `POST /api/auth/login` → Authenticate & receive a JWT  
+- `GET /api/tasks` → Fetch tasks (requires JWT in `Authorization: Bearer <token>` header)  
+
+👉 Backend runs on: `http://localhost:8080/`
+
+---
+
+### 3. Run the frontend (Angular)
+```bash
+cd todolist-frontend
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Frontend available at:  
+👉 `http://localhost:4200/`
 
-## Code scaffolding
+Default routes:
+- `/login` → Login page  
+- `/todolist` → Task list (requires authentication)  
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
+### 4. Build frontend for production
 ```bash
-ng generate component component-name
+cd todolist-frontend
+ng build --configuration production
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+## 📂 Project Structure
+```
+todolist-app/
+ ├── todolist/                # Spring Boot backend
+ │   ├── model/               # Entities (User, Task)
+ │   ├── repository/          # Spring Data Repositories
+ │   ├── service/             # Business logic (UserService, TaskService, JwtService)
+ │   ├── controller/          # REST Controllers (TaskController, AuthController)
+ │   ├── security/            # JWT Filter + SecurityConfig
+ │   └── dto/                 # DTOs for requests/responses
+ │
+ ├── todolist-frontend/       # Angular + Tailwind frontend
+ │   ├── components/          # LoginComponent, TodoListComponent
+ │   ├── services/            # AuthService, TaskService
+ │   ├── guards/              # AuthGuard
+ │   └── app.routes.ts        # Angular routes
+ │
+ └── README.md                # Documentation
 ```
 
-## Building
+---
 
-To build the project run:
+## 🔐 Authentication Flow
 
-```bash
-ng build
-```
+1. **Register/Login** via Angular form → calls `/api/auth/register` or `/api/auth/login`.  
+2. Backend returns a **JWT token**.  
+3. Token is saved in **localStorage**.  
+4. Angular attaches `Authorization: Bearer <token>` header on every request.  
+5. Spring Security validates token with `JwtAuthenticationFilter`.  
+6. Access to `/api/tasks` is **granted only if token is valid**.  
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 📜 License
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+This project is licensed under the **MIT License**.
