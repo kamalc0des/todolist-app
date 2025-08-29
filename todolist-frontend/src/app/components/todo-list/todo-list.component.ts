@@ -38,6 +38,7 @@ export class TodoListComponent implements OnInit {
         next: () => {
           this.newTask = '';
           this.loadTasks();
+          this.errorMessageModal = "";
           this.errorMessage = "";
         },
         error: (err) => {
@@ -60,6 +61,7 @@ export class TodoListComponent implements OnInit {
     this.taskService.updateTask(task).subscribe({
       next: () => {
         this.loadTasks();
+        this.errorMessageModal = "";
         this.errorMessage = "";
       },
       error: (err) => {
@@ -79,6 +81,8 @@ export class TodoListComponent implements OnInit {
   openEditModal(task: Task) {
     this.selectedTask = { ...task }; // clone the task, do not update the current directly
     this.isEditModalOpen = true;
+    this.errorMessageModal = "";
+    this.errorMessage = "";
   }
 
   closeEditModal() {
