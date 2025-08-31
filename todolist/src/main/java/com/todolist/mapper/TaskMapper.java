@@ -2,6 +2,7 @@ package com.todolist.mapper;
 
 import com.todolist.dto.TaskDto;
 import com.todolist.model.Task;
+import com.todolist.model.User;
 
 /**
  * TaskMapper is responsible for converting between:
@@ -18,14 +19,21 @@ public class TaskMapper {
 
     // Convert entity -> DTO
     public static TaskDto toDto(Task task) {
-        return new TaskDto(task.getId(), task.getTitle(), task.isCompleted());
+        return new TaskDto(
+            task.getId(),
+            task.getTitle(),
+            task.isCompleted(),
+            task.getUser().getUsername()
+        );
     }
+
     // Convert DTO -> entity
-    public static Task toEntity(TaskDto dto) {
+    public static Task toEntity(TaskDto dto, User user) {
         Task task = new Task();
         task.setId(dto.id());
         task.setTitle(dto.title());
         task.setCompleted(dto.completed());
+        task.setUser(user);
         return task;
     }
 }
