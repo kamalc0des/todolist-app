@@ -27,6 +27,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
+
     // Roles/authorities — empty for now TODO, if we want to control rights on tasks
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

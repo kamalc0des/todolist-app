@@ -1,21 +1,27 @@
 <div class="flex items-center justify-center h-screen bg-gray-100">
     <div class="bg-white p-6 rounded shadow-md w-96">
-      <h2 class="text-xl font-bold mb-4">Login</h2>
-  
-      <input [(ngModel)]="username" type="text" placeholder="Username"
-             class="border p-2 w-full mb-3" />
-  
-      <input [(ngModel)]="password" type="password" placeholder="Password"
-             class="border p-2 w-full mb-3" />
-  
-      <button (click)="login()" 
-              class="bg-blue-500 text-white px-4 py-2 rounded w-full">
-        Login
-      </button>
-  
-      @if(errorMessage) {
+        <h2 class="text-xl font-bold mb-4">Login</h2>
+
+        <!-- Username -->
+        <input [(ngModel)]="username" type="text" placeholder="Username" class="border p-2 w-full mb-3" />
+
+        <!-- Password -->
+        <input [(ngModel)]="password" type="password" placeholder="Password" class="border p-2 w-full mb-3" />
+
+        <!-- Login button -->
+        <button (click)="login()" class="bg-blue-500 text-white px-4 py-2 rounded w-full mb-2">
+            Login
+        </button>
+
+        @if(errorMessage) {
         <p class="text-red-500 mt-2">{{ errorMessage }}</p>
-      }
+        }
+
+
+        <hr class="my-4">
+        <p class="text-center text-sm text-gray-600">
+          Don't have an account? 
+          <a routerLink="/signup" class="text-green-500 hover:underline">Sign up</a>
+        </p>
     </div>
-  </div>
-  
+</div>
